@@ -8,25 +8,6 @@ from subprocess import check_output
 from base64 import b64decode
 import platform
 
-def getChromedriverPath() :
-    if platform.system() == 'Windows' :
-        locateCmd = 'where'
-    else :
-        locateCmd = 'whereis'
-
-    chromedriverPath = check_output([locateCmd, 'chromedriver']).strip().decode('utf-8')
-
-    if 'INFO:' in chromedriverPath or chromedriverPath == 'chromedriver:' :
-        print('Chromedriver isn\'t installed..')
-        exit()
-    else :
-        if platform.system() != 'Windows' :
-            chromedriverPath = chromedriverPath.replace('chromedriver: ', '')
-        else :
-            pass
-    
-    return chromedriverPath
-
 def clickButton(id) :
     try:
         bail = WebDriverWait(browser, 4).until(
@@ -44,8 +25,7 @@ options.add_argument('--ignore-ssl-errors=yes')
 options.add_argument('--ignore-certificate-errors')
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 options.add_argument("--headless")
-s = Service(getChromedriverPath())
-browser = webdriver.Chrome(service=s, options=options)
+browser = webdriver.Chrome(options=options)
 browser.get('https://192.168.1.1/')
 
 usernameBox = browser.find_element('id', 'Frm_Username')
