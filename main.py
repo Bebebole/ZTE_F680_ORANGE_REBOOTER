@@ -5,8 +5,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from time import sleep
 from subprocess import check_output
-from base64 import b64decode
-import platform
 
 def clickButton(id) :
     try:
